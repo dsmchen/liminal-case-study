@@ -1,6 +1,6 @@
 # Design: Behavior Tracker
 
-> Exported from `vault/DESIGN.md` — edit there, not here. This copy uses standard Markdown (not Obsidian wikilinks) so it renders correctly outside Obsidian.
+> Exported from [`vault/DESIGN.md`](../vault/DESIGN.md) — edit there, not here. This copy uses standard Markdown (not Obsidian wikilinks) so it renders correctly outside Obsidian.
 
 **Status:** Draft
 **Author:** Doris Chen
