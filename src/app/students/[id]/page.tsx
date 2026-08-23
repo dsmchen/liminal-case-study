@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import StudentClient from "./StudentClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function StudentDetailPage({
   params,
 }: {

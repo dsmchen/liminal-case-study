@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
   ANTECEDENT_OPTIONS,
@@ -31,9 +30,12 @@ function toggleCheckbox(value: string, list: string[]): string[] {
 }
 
 export default function EntriesClient({ entries }: { entries: Entry[] }) {
-  const router = useRouter();
   const [localEntries, setLocalEntries] = useState<Entry[]>(entries);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLocalEntries(entries);
+  }, [entries]);
   const [editData, setEditData] = useState<{
     antecedent: string[];
     behavior: string[];

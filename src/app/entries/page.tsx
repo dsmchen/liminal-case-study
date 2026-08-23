@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import EntriesClient from "./EntriesClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function EntriesPage() {
   const supabase = await createClient();
   await supabase.auth.getUser();
