@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import Spinner from "@/components/Spinner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -91,7 +93,14 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full rounded-md bg-blue-600 px-4 py-2 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? (
+              <span className="inline-flex items-center gap-1.5">
+                <Spinner className="h-4 w-4" />
+                Signing in...
+              </span>
+            ) : (
+              "Sign in"
+            )}
           </button>
         </form>
       </div>

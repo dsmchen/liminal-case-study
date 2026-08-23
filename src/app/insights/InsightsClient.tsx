@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Spinner from "@/components/Spinner";
 
 interface Student {
   id: string;
@@ -138,7 +139,10 @@ export default function InsightsClient({ students }: { students: Student[] }) {
       </div>
 
       {loading && (
-        <p className="text-sm text-gray-500">Loading...</p>
+        <span className="inline-flex items-center gap-1.5 text-sm text-gray-500">
+          <Spinner className="h-4 w-4" />
+          Loading...
+        </span>
       )}
 
       {error && (
@@ -186,7 +190,14 @@ export default function InsightsClient({ students }: { students: Student[] }) {
                 disabled={generating}
                 className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
               >
-                {generating ? "Generating..." : "Generate Insights"}
+                {generating ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <Spinner className="h-4 w-4" />
+                    Generating...
+                  </span>
+                ) : (
+                  "Generate Insights"
+                )}
               </button>
             </div>
           ) : (
@@ -236,7 +247,14 @@ export default function InsightsClient({ students }: { students: Student[] }) {
                 disabled={generating}
                 className="text-sm text-blue-600 hover:text-blue-800"
               >
-                {generating ? "Regenerating..." : "Regenerate Insights"}
+                {generating ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <Spinner className="h-4 w-4" />
+                    Regenerating...
+                  </span>
+                ) : (
+                  "Regenerate Insights"
+                )}
               </button>
             </div>
           )}

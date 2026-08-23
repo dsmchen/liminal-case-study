@@ -10,6 +10,7 @@ import {
   CONSEQUENCE_OPTIONS,
   LOCATION_OPTIONS,
 } from "@/lib/types";
+import Spinner from "@/components/Spinner";
 
 export default function NewEntryPage() {
   const searchParams = useSearchParams();
@@ -383,7 +384,14 @@ export default function NewEntryPage() {
               disabled={loading}
               className="rounded-md bg-blue-600 px-4 py-2 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
             >
-              {loading ? "Saving..." : "Save Entry"}
+              {loading ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <Spinner className="h-4 w-4" />
+                  Saving...
+                </span>
+              ) : (
+                "Save Entry"
+              )}
             </button>
             <button
               type="button"

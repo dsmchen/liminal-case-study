@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import EntriesClient from "@/app/entries/EntriesClient";
+import Spinner from "@/components/Spinner";
 
 interface Student {
   id: string;
@@ -100,7 +101,14 @@ export default function StudentClient({
               disabled={loading}
               className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
             >
-              {loading ? "Saving..." : "Save"}
+              {loading ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <Spinner className="h-4 w-4" />
+                  Saving...
+                </span>
+              ) : (
+                "Save"
+              )}
             </button>
             <button
               onClick={() => {
@@ -200,11 +208,16 @@ export default function StudentClient({
               disabled={loading}
               className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
             >
-              {loading
-                ? "Processing..."
-                : student.active
-                  ? "Deactivate"
-                  : "Reactivate"}
+              {loading ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <Spinner className="h-4 w-4" />
+                  Processing...
+                </span>
+              ) : student.active ? (
+                "Deactivate"
+              ) : (
+                "Reactivate"
+              )}
             </button>
             <button
               onClick={() => setShowDeactivate(false)}
