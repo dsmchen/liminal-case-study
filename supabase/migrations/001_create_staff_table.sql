@@ -8,6 +8,9 @@ create table staff (
   created_at timestamptz default now()
 );
 
+GRANT USAGE ON SCHEMA public TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON public.staff TO authenticated;
+
 alter table staff enable row level security;
 
 create policy "Staff can view all staff records"
