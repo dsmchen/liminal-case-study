@@ -29,15 +29,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (status.existingInsight) {
-    return NextResponse.json({
-      insight: status.existingInsight,
-      patterns: [],
-      recommendations: status.existingInsight.recommendations,
-      summary: status.existingInsight.pattern_description,
-    });
-  }
-
   try {
     const result = await generateAndSaveInsight(studentId, supabase);
     return NextResponse.json({

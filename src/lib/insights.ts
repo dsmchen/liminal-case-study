@@ -82,6 +82,11 @@ export async function generateAndSaveInsight(
   const deidentified = entries.map(deidentifyEntry);
   const result = await generateInsights(deidentified);
 
+  await supabase
+    .from("insights")
+    .delete()
+    .eq("student_id", studentId);
+
   const { error: saveError } = await supabase.from("insights").insert({
     student_id: studentId,
     pattern_description: result.summary,
