@@ -130,35 +130,29 @@ export default function EntriesClient({ entries }: { entries: Entry[] }) {
           className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
         >
           <div className="mb-2 flex items-center justify-between">
-            <div>
-              <h2 className="font-medium text-gray-900">
-                {entry.students?.name ?? "Unknown"}
-              </h2>
-              {entry.staff?.name && (
-                <p className="text-xs text-gray-500">Staff: {entry.staff.name}</p>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <time className="text-xs text-gray-500">
-                {new Date(entry.timestamp).toLocaleString()}
-              </time>
-              {editingId !== entry.id && (
-                <>
-                  <button
-                    onClick={() => startEditing(entry)}
-                    className="text-xs text-blue-600 hover:text-blue-800"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => setShowDelete(entry.id)}
-                    className="text-xs text-red-600 hover:text-red-800"
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </div>
+            <h2 className="font-medium text-gray-900">
+              {entry.students?.name ?? "Unknown"}
+            </h2>
+            {editingId !== entry.id && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => startEditing(entry)}
+                  className="text-xs text-blue-600 hover:text-blue-800"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => setShowDelete(entry.id)}
+                  className="text-xs text-red-600 hover:text-red-800"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="mb-2 flex items-center justify-between text-xs text-gray-500">
+            {entry.staff?.name && <span>Staff: {entry.staff.name}</span>}
+            <time>{new Date(entry.timestamp).toLocaleString()}</time>
           </div>
 
           {editingId === entry.id ? (
