@@ -23,7 +23,7 @@ export default async function StudentDetailPage({
 
   const { data: entries } = await supabase
     .from("entries")
-    .select("*, students(name)")
+    .select("*, students(name), staff(name)")
     .eq("student_id", id)
     .order("timestamp", { ascending: false });
 

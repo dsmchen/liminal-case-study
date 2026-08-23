@@ -22,6 +22,8 @@ interface Entry {
   location: string;
   comments: string | null;
   timestamp: string;
+  students?: { name: string } | null;
+  staff?: { name: string } | null;
 }
 
 export default function StudentClient({

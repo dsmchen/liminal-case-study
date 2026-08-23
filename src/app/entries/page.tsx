@@ -8,7 +8,7 @@ export default async function EntriesPage() {
 
   const { data: entries } = await supabase
     .from("entries")
-    .select("*, students(name)")
+    .select("*, students(name), staff(name)")
     .order("timestamp", { ascending: false });
 
   return (

@@ -20,6 +20,7 @@ interface Entry {
   comments: string | null;
   timestamp: string;
   students?: { name: string } | null;
+  staff?: { name: string } | null;
 }
 
 function toggleCheckbox(value: string, list: string[]): string[] {
@@ -126,9 +127,14 @@ export default function EntriesClient({ entries }: { entries: Entry[] }) {
           className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
         >
           <div className="mb-2 flex items-center justify-between">
-            <h2 className="font-medium text-gray-900">
-              {entry.students?.name ?? "Unknown"}
-            </h2>
+            <div>
+              <h2 className="font-medium text-gray-900">
+                {entry.students?.name ?? "Unknown"}
+              </h2>
+              {entry.staff?.name && (
+                <p className="text-xs text-gray-500">Staff: {entry.staff.name}</p>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               <time className="text-xs text-gray-500">
                 {new Date(entry.timestamp).toLocaleString()}
