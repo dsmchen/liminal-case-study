@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import EntriesClient from "@/app/entries/EntriesClient";
 
 interface Student {
   id: string;
@@ -14,6 +15,7 @@ interface Student {
 
 interface Entry {
   id: string;
+  student_id: string;
   antecedent: string[];
   behavior: string[];
   consequence: string[];
@@ -227,61 +229,7 @@ export default function StudentClient({
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
-            {entries.map((entry) => (
-              <div
-                key={entry.id}
-                className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-              >
-                <div className="mb-2 flex items-center justify-end">
-                  <time className="text-xs text-gray-500">
-                    {new Date(entry.timestamp).toLocaleString()}
-                  </time>
-                </div>
-
-                <div className="space-y-2 text-sm">
-                  <div>
-                    <span className="font-medium text-gray-700">
-                      Antecedent:{" "}
-                    </span>
-                    <span className="text-gray-600">
-                      {entry.antecedent.join(", ")}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-700">
-                      Behavior:{" "}
-                    </span>
-                    <span className="text-gray-600">
-                      {entry.behavior.join(", ")}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-700">
-                      Consequence:{" "}
-                    </span>
-                    <span className="text-gray-600">
-                      {entry.consequence.join(", ")}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-700">
-                      Location:{" "}
-                    </span>
-                    <span className="text-gray-600">{entry.location}</span>
-                  </div>
-                  {entry.comments && (
-                    <div>
-                      <span className="font-medium text-gray-700">
-                        Comments:{" "}
-                      </span>
-                      <span className="text-gray-600">{entry.comments}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <EntriesClient entries={entries} />
         )}
       </div>
     </div>
