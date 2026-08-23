@@ -88,13 +88,13 @@ export default function StudentClient({
     <div className="space-y-6">
       {editing ? (
         <div className="space-y-3">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="block w-full max-w-md rounded-md border border-gray-300 px-3 py-1.5 text-lg font-bold text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          />
           <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-lg font-bold text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-            />
             <button
               onClick={handleSave}
               disabled={loading}
@@ -129,7 +129,7 @@ export default function StudentClient({
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-between">
+        <div className="space-y-3">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold text-gray-900">{student.name}</h1>
             <button

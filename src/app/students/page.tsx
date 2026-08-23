@@ -36,23 +36,16 @@ export default async function StudentsPage() {
         ) : (
           <div className="space-y-3">
             {students.map((student) => (
-              <div
+              <Link
                 key={student.id}
-                className="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+                href={`/students/${student.id}`}
+                className="block rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div>
-                  <h2 className="font-medium text-gray-900">{student.name}</h2>
-                  <p className="text-sm text-gray-500">
-                    {student.active ? "Active" : "Inactive"}
-                  </p>
-                </div>
-                <Link
-                  href={`/students/${student.id}`}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  View
-                </Link>
-              </div>
+                <h2 className="font-medium text-gray-900">{student.name}</h2>
+                <p className="text-sm text-gray-500">
+                  {student.active ? "Active" : "Inactive"}
+                </p>
+              </Link>
             ))}
           </div>
         )}
