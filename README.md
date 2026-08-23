@@ -11,14 +11,18 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 ├── vault/                    # Obsidian working copy of DESIGN.md
 ├── src/
 │   ├── app/
+│   │   ├── api/              # API routes (insights)
 │   │   ├── auth/             # Auth routes (callback, signout)
 │   │   ├── entries/          # ABC entry pages (list + new)
+│   │   ├── insights/         # Insights page
 │   │   ├── students/         # Student management (list + new)
 │   │   ├── login/            # Login page
 │   │   ├── layout.tsx        # Root layout with header
 │   │   └── page.tsx          # Dashboard
 │   ├── components/           # Shared components (header)
 │   ├── lib/
+│   │   ├── gemini.ts         # Gemini API client
+│   │   ├── insights.ts       # Insights business logic
 │   │   ├── supabase/         # Supabase client (server + browser)
 │   │   └── types.ts          # TypeScript types + form options
 │   ├── proxy.ts              # Auth proxy (session refresh, redirects)
@@ -35,6 +39,7 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 
 - **Frontend:** Next.js 16 (App Router), React, Tailwind CSS
 - **Backend:** Supabase (Postgres, Auth)
+- **AI/Insights:** Gemini API (MVP)
 - **Testing:** Vitest (unit), Playwright (E2E)
 - **Hosting:** Vercel
 
@@ -45,12 +50,13 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
    npm install
    ```
 
-2. Copy `.env.example` to `.env.local` and fill in your Supabase credentials.
+2. Copy `.env.example` to `.env.local` and fill in your Supabase credentials and Gemini API key.
 
 3. Run database migrations in Supabase SQL Editor:
    - `supabase/migrations/001_create_staff_table.sql`
    - `supabase/migrations/002_create_students_table.sql`
    - `supabase/migrations/003_create_entries_table.sql`
+   - `supabase/migrations/004_create_insights_table.sql`
 
 4. Start the dev server:
    ```bash
@@ -68,6 +74,8 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 - [`docs/DESIGN.md`](docs/DESIGN.md) — Full architecture, rationale, and open decisions
 - [`AGENTS.md`](AGENTS.md) — Instructions for AI coding agents
 - [`src/lib/types.ts`](src/lib/types.ts) — TypeScript types and ABC form options
+- [`src/lib/gemini.ts`](src/lib/gemini.ts) — Gemini API client and prompt
+- [`src/lib/insights.ts`](src/lib/insights.ts) — De-identification and threshold logic
 - [`src/proxy.ts`](src/proxy.ts) — Auth proxy for session management and route protection
 
 ## Contributing
