@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface Student {
   id: string;
@@ -31,12 +32,21 @@ interface InsightData {
 }
 
 export default function InsightsClient({ students }: { students: Student[] }) {
+  const searchParams = useSearchParams();
+  const preselectedStudentId = searchParams.get("studentId");
   const [selectedStudentId, setSelectedStudentId] = useState("");
   const [status, setStatus] = useState<InsightStatus | null>(null);
   const [insight, setInsight] = useState<InsightData | null>(null);
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (preselectedStudentId) {
+      setSelectedStudentId(preselectedStudentId);
+      fetchStatus(preselectedStudentId);
+    }
+  }, [preselectedStudentId]);
 
   const fetchStatus = async (studentId: string) => {
     setSelectedStudentId(studentId);

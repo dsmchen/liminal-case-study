@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { Student } from "@/lib/types";
 import {
@@ -12,6 +12,8 @@ import {
 } from "@/lib/types";
 
 export default function NewEntryPage() {
+  const searchParams = useSearchParams();
+  const preselectedStudentId = searchParams.get("studentId");
   const [students, setStudents] = useState<Student[]>([]);
   const [studentId, setStudentId] = useState("");
   const [antecedent, setAntecedent] = useState<string[]>([]);
@@ -35,9 +37,14 @@ export default function NewEntryPage() {
       .eq("active", true)
       .order("name")
       .then(({ data }) => {
-        if (data) setStudents(data);
+        if (data) {
+          setStudents(data);
+          if (preselectedStudentId) {
+            setStudentId(preselectedStudentId);
+          }
+        }
       });
-  }, []);
+  }, [preselectedStudentId]);
 
   const toggleCheckbox = (
     value: string,
