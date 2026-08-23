@@ -58,6 +58,12 @@ Paper is physically fixed to one location, spreadsheets and forms lack ABC-speci
 
 This stack was chosen to minimize the number of services a solo developer needs to configure and maintain (one hosting provider, one database/auth provider), at the cost of some vendor lock-in to Vercel/Supabase/the chosen LLM provider specifically.
 
+### Testing strategy
+
+- **Unit tests (Vitest):** Cover business logic that is easy to get subtly wrong and costly to get wrong silently — insights threshold logic, entry validation, de-identification before LLM calls (see "Access control and data protection"). Run against Supabase using a local/test database, never against real student data.
+- **E2E tests (Playwright):** Cover the core staff workflows end to end — login, submitting an ABC entry, viewing entry history, and the insights-not-yet-available vs. insights-shown states. Run against seeded synthetic data (see "Data seeding"), consistent with the "no real student data in fixtures" constraint in AGENTS.md.
+- Both test suites run in CI before merge (once CI is set up — not yet configured for this solo MVP).
+
 ### Data flow
 
 1. A staff member logs in via the web client (teaching-team accounts only, per non-goals).
