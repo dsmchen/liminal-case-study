@@ -67,9 +67,9 @@ test.describe("auth flows", () => {
     await expect(page).toHaveURL("/");
 
     // Check navigation cards
-    await expect(page.locator("text=Students")).toBeVisible();
-    await expect(page.locator("text=New Entry")).toBeVisible();
-    await expect(page.locator("text=Entry History")).toBeVisible();
-    await expect(page.locator("text=Insights")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Students" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "New Entry" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Entry History" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Insights" })).toBeVisible();
   });
 });

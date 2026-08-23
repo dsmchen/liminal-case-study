@@ -63,14 +63,14 @@ test.describe("entry form", () => {
     await page.goto("/entries");
 
     await expect(page.locator("h1")).toContainText("Entry History");
-    await expect(page.locator("text=New Entry")).toBeVisible();
+    await expect(page.getByRole("main").getByRole("link", { name: "New Entry" })).toBeVisible();
   });
 
   test("new entry link works from entry history", async ({ page }) => {
     await login(page);
     await page.goto("/entries");
 
-    await page.getByRole("link", { name: "New Entry" }).first().click();
+    await page.getByRole("main").getByRole("link", { name: "New Entry" }).click();
     await expect(page).toHaveURL("/entries/new");
   });
 });
