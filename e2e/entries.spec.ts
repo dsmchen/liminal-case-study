@@ -73,4 +73,15 @@ test.describe("entry form", () => {
     await page.getByRole("main").getByRole("link", { name: "New Entry" }).click();
     await expect(page).toHaveURL("/entries/new");
   });
+
+  test("entry history shows edit and delete buttons", async ({ page }) => {
+    await login(page);
+    await page.goto("/entries");
+
+    const entryCard = page.locator(".rounded-lg.border").first();
+    if (await entryCard.isVisible()) {
+      await expect(entryCard.getByText("Edit")).toBeVisible();
+      await expect(entryCard.getByText("Delete")).toBeVisible();
+    }
+  });
 });
