@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function Header() {
   const supabase = await createClient();
@@ -9,7 +10,7 @@ export default async function Header() {
   return (
     <header className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-        <h1 className="text-lg font-semibold text-gray-900">Behavior Tracker</h1>
+        <Link href="/" className="text-lg font-semibold text-gray-900 hover:text-gray-700">Behavior Tracker</Link>
         <form action="/auth/signout" method="POST">
           <button
             type="submit"
