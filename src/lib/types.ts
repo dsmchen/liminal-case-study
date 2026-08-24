@@ -30,6 +30,7 @@ export interface Insight {
   id: string;
   student_id: string;
   pattern_description: string;
+  recommendations: string[];
   supporting_entry_ids: string[];
   generated_at: string;
 }
