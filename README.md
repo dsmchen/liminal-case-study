@@ -13,8 +13,7 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 ## Project structure
 
 ```
-├── docs/                     # CASE_STUDY.md, DESIGN.md, and supporting diagram (portable Markdown)
-├── vault/                    # Obsidian working copy of DESIGN.md
+├── docs/                     # CASE_STUDY.md, DESIGN.md, and supporting diagram
 ├── src/
 │   ├── app/
 │   │   ├── api/              # API routes (insights)

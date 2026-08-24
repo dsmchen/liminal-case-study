@@ -36,7 +36,7 @@ This is a behavior tracker web app for SEN (special educational needs) teaching 
 ## Conventions
 
 - Component and API route naming should match the terms used in DESIGN.md ("API routes," not "API server"; "Supabase," not "the database") — keep code, comments, and docs using the same vocabulary.
-- New architectural decisions, trade-offs, or scope changes should be reflected back into `docs/DESIGN.md` (and `vault/DESIGN.md`, its Obsidian source — see the note at the top of `docs/DESIGN.md`), not left undocumented in code comments only.
+- New architectural decisions, trade-offs, or scope changes should be reflected back into `docs/DESIGN.md`, not left undocumented in code comments only.
 
 ## Commit messages
 
