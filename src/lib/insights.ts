@@ -6,7 +6,7 @@ import {
   type InsightResult,
 } from "./gemini";
 
-export const INSIGHT_THRESHOLD = 5;
+export const INSIGHT_THRESHOLD = Number(process.env.INSIGHT_THRESHOLD) || 5;
 
 export interface InsightStatus {
   thresholdMet: boolean;
