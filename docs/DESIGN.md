@@ -1,10 +1,7 @@
 # Design: Behavior Tracker
 
-> Exported from [`vault/DESIGN.md`](../vault/DESIGN.md) — edit there, not here. This copy uses standard Markdown (not Obsidian wikilinks) so it renders correctly outside Obsidian.
-
 **Status:** Draft
 **Author:** Doris Chen
-**Date:** 22 August 2026
 
 ## Summary
 
@@ -95,11 +92,11 @@ Insights ship in v1, gated behind a minimum entry threshold (e.g. a pattern is o
 - Any authenticated staff member can view and log entries for any student. Access is restricted by team membership (i.e. having a valid staff login), not by per-student assignment.
 - Data encrypted in transit (HTTPS) and at rest (database-level encryption).
 - Entries sent to the LLM provider for insight generation are stripped of all identifying information — only antecedent, behavior, consequence, comments, timestamp, and location are sent. Student ID and staff identity are removed entirely. The LLM provider never receives directly identifying information.
+- Student record deletion (e.g. "Right to be Forgotten" requests) is handled manually via the Supabase dashboard by whoever holds project access (the school's IT team), not through an in-app admin role. No in-app deletion feature exists in v1 — see "Future considerations."
 
 ### Future considerations (v2+)
 
-- **Admin role:** An admin role for the school's IT team to manage student records and handle data deletion requests. Not implemented in v1.
-- **Student record deletion:** Ability to delete a student's full record on request (satisfying "Right to be Forgotten" workflows). Not implemented in v1.
+- **In-app admin role:** A dedicated admin role/UI within the app itself for managing student records and handling deletion requests, rather than relying on direct Supabase dashboard access. Not implemented in v1.
 - **Per-student staff assignment:** Restricting access to only assigned staff members. Current v1 uses team-wide access.
 
 ### Diagram
@@ -130,13 +127,14 @@ Insights ship in v1, gated behind a minimum entry threshold (e.g. a pattern is o
 - **Roster/assignment model at scale:** Team-wide access works for a single classroom team. At what point (more staff, multiple schools) does this need to become per-student assignment instead? No trigger point defined yet.
 - **Data retention period:** No stated policy on how long entries are kept after a student leaves the school or the pilot ends. Worth deciding before real data is collected, not after.
 - **LLM data handling:** Entries are stripped of name/staff identity before being sent to the LLM provider, but an internal student ID may still count as personal/identifiable data under Hong Kong PDPO or the provider's own terms. Needs a check of the specific LLM provider's data retention, training-use, and processing-region policies before this is treated as sufficient de-identification — relevant to the "Formal compliance audit" non-goal.
+- **Insight generation rate limiting:** Nothing currently stops a staff member from repeatedly triggering insight generation, which could incur unnecessary LLM costs once off Gemini's free tier. No rate-limiting mechanism has been decided or implemented yet.
 
 ## Pilot readiness checklist
 
 Before real student data is entered (i.e. before "Data seeding" placeholder data is replaced), confirm:
 
 - **AI provider swapped:** Gemini (MVP/free tier) replaced with a no-training commercial provider (e.g. Claude API), per the "Gemini free tier for MVP" trade-off.
-- **Admin role staffed:** School IT team has been identified and given admin access, per "Access control and data protection."
+- **Supabase dashboard access confirmed:** School IT team has been given access to the Supabase project dashboard, so manual student-record deletion requests can actually be fulfilled, per "Access control and data protection."
 - **Data retention period decided:** A policy exists for how long entries are kept after a student leaves or the pilot ends, per the "Data retention period" open question.
 - **LLM data handling confirmed:** De-identification approach (internal student ID, no name) has been checked against the chosen provider's terms and, ideally, Hong Kong PDPO's definition of personal data, per the "LLM data handling" open question.
 - **Insights threshold reviewed:** Default entry threshold (5+) confirmed as reasonable for the actual pilot student population, per the "Insights threshold value" open question.
