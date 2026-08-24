@@ -1,13 +1,19 @@
 # Behavior Tracker
 
+> **This repo is a case study.** See [`docs/CASE_STUDY.md`](docs/CASE_STUDY.md) for the full write-up on the problem, approach, and impact of using AI to design and build this project.
+
 A web app for logging and analyzing ABC (Antecedent-Behavior-Consequence) charts, built for SEN (special educational needs) teaching teams. Replaces paper-based ABC charting with a collaborative digital tool that multiple staff members can log into and surface behavioral patterns from.
 
 Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN.md`](docs/DESIGN.md).
 
+## Status 
+
+**Draft / MVP in development.** Currently seeded with placeholder data only — see the [Pilot readiness checklist](docs/DESIGN.md#pilot-readiness-checklist) in the design doc before any real student data is entered.
+
 ## Project structure
 
 ```
-├── docs/                     # Design docs and diagrams
+├── docs/                     # CASE_STUDY.md, DESIGN.md, and supporting diagram (portable Markdown)
 ├── vault/                    # Obsidian working copy of DESIGN.md
 ├── src/
 │   ├── app/
@@ -46,6 +52,7 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 ## Getting started
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -68,6 +75,7 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 
 ## Key files
 
+- [`docs/CASE_STUDY.md`](docs/CASE_STUDY.md) — Problem framing, AI-assisted design approach, and impact analysis
 - [`docs/DESIGN.md`](docs/DESIGN.md) — Full architecture, rationale, and open decisions
 - [`AGENTS.md`](AGENTS.md) — Instructions for AI coding agents
 - [`src/lib/types.ts`](src/lib/types.ts) — TypeScript types and ABC form options

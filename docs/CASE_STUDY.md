@@ -1,4 +1,4 @@
-# Proposal: Behavior Tracker
+# Case study: Behavior Tracker
 
 1. **Choose and frame the problem.** What problem, project, or workflow are you most interested in working on, and why? What makes it worth exploring?
 

@@ -136,5 +136,6 @@ Before real student data is entered (i.e. before "Data seeding" placeholder data
 - **Data retention period decided:** A policy exists for how long entries are kept after a student leaves or the pilot ends, per the "Data retention period" open question.
 - **LLM data handling confirmed:** De-identification approach (internal student ID, no name) has been checked against the chosen provider's terms and, ideally, Hong Kong PDPO's definition of personal data, per the "LLM data handling" open question.
 - **Insights threshold reviewed:** Default entry threshold (5+) confirmed as reasonable for the actual pilot student population, per the "Insights threshold value" open question.
+- **CI and tests configured:** Vitest and Playwright suites are running in CI before merge, per "Testing strategy" — not yet set up for this solo MVP.
 
 This list should be revisited and updated as new decisions are made. It is not exhaustive on its own, but exists to make sure decisions already flagged elsewhere in this doc do not get lost between drafting and launch.
