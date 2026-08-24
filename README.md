@@ -6,9 +6,11 @@ A web app for logging and analyzing ABC (Antecedent-Behavior-Consequence) charts
 
 Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN.md`](docs/DESIGN.md).
 
-## Status 
+## Status
 
 **Draft / MVP in development.** Currently seeded with placeholder data only — see the [Pilot readiness checklist](docs/DESIGN.md#pilot-readiness-checklist) in the design doc before any real student data is entered.
+
+**Live demo:** https://liminal-case-study.vercel.app/
 
 ## Project structure
 
@@ -34,6 +36,7 @@ Full reasoning, architecture, and open decisions are documented in [`docs/DESIGN
 │   └── test/                 # Unit tests
 ├── e2e/                      # Playwright E2E tests
 ├── supabase/migrations/      # Database migrations
+├── .env.example              # Environment variable template
 ├── AGENTS.md                 # AI agent instructions
 ├── README.md                 # You are here
 ├── playwright.config.ts      # Playwright config
