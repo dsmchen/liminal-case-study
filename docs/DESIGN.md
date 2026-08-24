@@ -45,9 +45,9 @@ Paper is physically fixed to one location, spreadsheets and forms lack ABC-speci
 ### Components
 
 - **Web client:** Responsive frontend for logging ABC entries and viewing insights. Used by lead teachers, teaching assistants, and specialist teachers from shared classroom devices or personal laptops/tablets via browser (no native app, per non-goals).
-- **API routes:** Handles authentication, entry submission, data retrieval, and triggers insight generation. Same codebase/deployment as the web client (see "Tech stack").
+- **API routes:** Handles insight generation and retrieval. Entry and student operations go directly from the browser to Supabase via the client library (RLS protects the data). Same codebase/deployment as the web client (see "Tech stack").
 - **Database:** Stores student profiles, staff accounts, and ABC entries, with built-in authentication (see "Tech stack").
-- **Insights engine:** Scheduled job that sends accumulated entries to an LLM to surface patterns (e.g. recurring antecedents) once enough data exists, and generate recommendations.
+- **Insights engine:** On-demand POST endpoint that sends accumulated entries to an LLM to surface patterns (e.g. recurring antecedents) once enough data exists, and generate recommendations. Triggered by user click, not a scheduled job.
 
 ### Tech stack
 
@@ -69,18 +69,17 @@ This stack was chosen to minimize the number of services a solo developer needs 
 ### Data flow
 
 1. A staff member logs in via the web client (teaching-team accounts only, per non-goals).
-2. They select a student and submit an ABC entry (Antecedent, Behavior, Consequence, comments, timestamp, location, staff ID).
-3. The API routes validate and write the entry to Supabase, tagged with the submitting staff member and timestamp.
-4. Entries from all staff accumulate against the same student profile, regardless of who logged them or from where.
-5. Once a student has enough entries (see "Insights engine" below), the insights engine analyzes them for repeated patterns and surfaces a recommendation (e.g. "writing activity precedes X in 6 of 8 entries — consider a quiet space during writing").
-6. Staff view a student's entry history and any generated insights through the web client.
+2. They select a student and submit an ABC entry (Antecedent, Behavior, Consequence, comments, timestamp, location, staff ID). Entry is written directly from the browser to Supabase via the client library (RLS protects the data).
+3. Entries from all staff accumulate against the same student profile, regardless of who logged them or from where.
+4. Once a student has enough entries (see "Insights engine" below), a staff member can trigger insight generation via the API, which analyzes entries for repeated patterns and surfaces a recommendation (e.g. "writing activity precedes X in 6 of 8 entries — consider a quiet space during writing").
+5. Staff view a student's entry history and any generated insights through the web client.
 
 ### Data model
 
 - **Student:** name/ID, active status
 - **Staff:** name, role (lead teacher / TA / specialist)
-- **Entry:** student ID, staff ID, antecedent, behavior, consequence, comments, timestamp, location
-- **Insight:** student ID, pattern description, supporting entry IDs, generated timestamp
+- **Entry:** student ID, staff ID, antecedent (text[]), behavior (text[]), consequence (text[]), comments, timestamp, location
+- **Insight:** student ID, pattern description, recommendations (text[]), supporting entry IDs, generated timestamp
 
 ### Data seeding
 
@@ -95,8 +94,13 @@ Insights ship in v1, gated behind a minimum entry threshold (e.g. a pattern is o
 - Authentication required for all staff, no anonymous or public access.
 - Any authenticated staff member can view and log entries for any student. Access is restricted by team membership (i.e. having a valid staff login), not by per-student assignment.
 - Data encrypted in transit (HTTPS) and at rest (database-level encryption).
-- The admin role is held by the school's IT team, who can delete a student's full record on request, satisfying the manual deletion process implied by the "Automated compliance workflows" non-goal.
-- Entries sent to the LLM provider for insight generation are stripped of student name and staff identity first — only antecedent, behavior, consequence, comments, and timestamp/location are sent, referenced by an internal student ID rather than a name. The LLM provider never receives directly identifying information.
+- Entries sent to the LLM provider for insight generation are stripped of all identifying information — only antecedent, behavior, consequence, comments, timestamp, and location are sent. Student ID and staff identity are removed entirely. The LLM provider never receives directly identifying information.
+
+### Future considerations (v2+)
+
+- **Admin role:** An admin role for the school's IT team to manage student records and handle data deletion requests. Not implemented in v1.
+- **Student record deletion:** Ability to delete a student's full record on request (satisfying "Right to be Forgotten" workflows). Not implemented in v1.
+- **Per-student staff assignment:** Restricting access to only assigned staff members. Current v1 uses team-wide access.
 
 ### Diagram
 
